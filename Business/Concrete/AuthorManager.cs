@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Business.Messages;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,41 +16,48 @@ namespace Business.Concrete
         {
             _authorDal = authorDal;
         }
-        public void Add(Author author)
+        public IResult Add(Author author)
         {
             _authorDal.Add(author);
+            return new SuccessResult(Message.SuccessAdded);
         }
 
-        public void DeleteById(int id)
+        public IResult DeleteById(int id)
         {
             var deletedEntity = _authorDal.Get(author => author.Id == id);
             _authorDal.Delete(deletedEntity);
+            return new SuccessResult(Message.SuccessDeleted);
         }
 
-        public void DeleteByName(string name)
+        public IResult DeleteByName(string name)
         {
             var deletedEntity = _authorDal.Get(author => author.Name.ToLower() == name.ToLower());
             _authorDal.Delete(deletedEntity);
+            return new SuccessResult(Message.SuccessDeleted);
         }
 
-        public List<Author> GetAll()
+        public IDataResult<List<Author>> GetAll()
         {
-            return _authorDal.GetAll();
+            var data = _authorDal.GetAll();
+            return new SuccessDataResult<List<Author>>(data, Message.Completed);
         }
 
-        public Author GetById(int id)
+        public IDataResult<Author> GetById(int id)
         {
-            return _authorDal.Get(c => c.Id == id);
+            var data = _authorDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Author>(data, Message.Completed);
         }
 
-        public Author GetByName(string name)
+        public IDataResult<Author> GetByName(string name)
         {
-            return _authorDal.Get(c => c.Name.ToLower() == name.ToLower());
+            var data = _authorDal.Get(c => c.Name.ToLower() == name.ToLower());
+            return new SuccessDataResult<Author>(data, Message.Completed);
         }
 
-        public void Update(Author author)
+        public IDataResult<Author> Update(Author author)
         {
-            _authorDal.Update(author);
+            var data = _authorDal.Update(author);
+            return new SuccessDataResult<Author>(data, Message.Completed);
         }
     }
 }

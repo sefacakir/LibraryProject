@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,34 +20,38 @@ namespace API.Controllers
         }
 
         [HttpGet("getall")]
-        public List<Author> GetAll()
+        public IDataResult<List<Author>> GetAll()
         {
-            return _authorService.GetAll();
+            var result = _authorService.GetAll();
+            return new SuccessDataResult<List<Author>>(result.Data, result.Message);
         }
 
         [HttpPost]
-        public Author Add(Author author)
+        public IResult Add(Author author)
         {
-            _authorService.Add(author);
-            return author;
+            var result = _authorService.Add(author);
+            return new SuccessResult(result.Message);
         }
 
         [HttpDelete("id")]
-        public void DeleteById(int id)
+        public IResult DeleteById(int id)
         {
-            _authorService.DeleteById(id);
+            var result = _authorService.DeleteById(id);
+            return new SuccessResult(result.Message);
         }
 
         [HttpDelete("name")]
-        public void DeleteByName(string name)
+        public IResult DeleteByName(string name)
         {
-            _authorService.DeleteByName(name);
+            var result = _authorService.DeleteByName(name);
+            return new SuccessResult(result.Message);
         }
 
         [HttpPut]
-        public void Update(Author author)
+        public IDataResult<Author> Update(Author author)
         {
-            _authorService.Update(author);
+            var result = _authorService.Update(author);
+            return new SuccessDataResult<Author>(result.Data, result.Message);
         }
     }
 }
