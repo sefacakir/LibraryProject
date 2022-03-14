@@ -9,6 +9,7 @@ namespace Business.Abstract
     {
         public void Add(Author author);
         public void DeleteById(int id);
+        public void DeleteByName(string name);
         public void Update(Author author);
         public Author GetById(int id);
         public Author GetByName(string name);

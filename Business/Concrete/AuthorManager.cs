@@ -21,7 +21,14 @@ namespace Business.Concrete
 
         public void DeleteById(int id)
         {
-            _authorDal.DeleteById(id);
+            var deletedEntity = _authorDal.Get(author => author.Id == id);
+            _authorDal.Delete(deletedEntity);
+        }
+
+        public void DeleteByName(string name)
+        {
+            var deletedEntity = _authorDal.Get(author => author.Name.ToLower() == name.ToLower());
+            _authorDal.Delete(deletedEntity);
         }
 
         public List<Author> GetAll()

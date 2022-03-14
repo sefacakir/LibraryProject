@@ -20,9 +20,10 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public void Add(Book book)
+        public Book Add(Book book)
         {
-            Console.WriteLine("Buraya geldi ve çalışmakta.");
+            _bookService.Add(book);
+            return book;
         }
 
         [HttpGet("getall")]
@@ -35,6 +36,29 @@ namespace API.Controllers
         public List<BookDetailDto> GetBookDetails()
         {
             return _bookService.GetBookDetails();
+        }
+
+        [HttpPut]
+        public Book Update(Book book)
+        {
+            _bookService.Update(book);
+            return book;
+        }
+
+        [HttpDelete("id")]
+        public Book DeleteById(int id)
+        {
+            var deletedEntity = _bookService.GetById(id);
+            _bookService.DeleteById(id);
+            return deletedEntity;
+        }
+
+        [HttpDelete("name")]
+        public Book DeleteById(string name)
+        {
+            var deletedEntity = _bookService.GetByName(name);
+            _bookService.DeleteByName(name);
+            return deletedEntity;
         }
     }
 }

@@ -23,6 +23,12 @@ namespace API
             services.AddControllers();
             services.AddSingleton<IBookService, BookManager>();
             services.AddSingleton<IBookDal, BookDal>();
+            services.AddSingleton<IAuthorService, AuthorManager>();
+            services.AddSingleton<IAuthorDal, AuthorDal>();
+            services.AddSingleton<ICategoryDal, CategoryDal>();
+            services.AddSingleton<ICategoryService, CategoryManager>();
+
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +40,8 @@ namespace API
             }
 
             app.UseRouting();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseEndpoints(endpoints =>
             {

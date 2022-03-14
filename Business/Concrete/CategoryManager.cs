@@ -23,13 +23,14 @@ namespace Business.Concrete
 
         public void DeleteById(int id)
         {
-            _categoryDal.DeleteById(id);
+            var deletedEntity = _categoryDal.Get(category => category.Id == id);
+            _categoryDal.Delete(deletedEntity);
         }
 
         public void DeleteByName(string name)
         {
             var deletedEntity = _categoryDal.Get(c => c.Name.ToLower() == name.ToLower());
-            _categoryDal.DeleteById(deletedEntity.Id);
+            _categoryDal.Delete(deletedEntity);
         }
 
         public List<Category> GetAll()

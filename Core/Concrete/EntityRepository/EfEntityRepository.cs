@@ -23,9 +23,14 @@ namespace Core.Concrete.EntityRepository
             }
         }
 
-        public void DeleteById(int id)
+        public void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            using (TContext context = new TContext())
+            {
+                var deletedEntry = context.Entry(entity);
+                deletedEntry.State = EntityState.Deleted;
+                context.SaveChanges();
+            }
         }
 
         public List<TEntity> GetAll(Expression<Func<TEntity,bool>> filter = null)
@@ -41,17 +46,24 @@ namespace Core.Concrete.EntityRepository
                     return context.Set<TEntity>().Where(filter).ToList();
                 }
             }
-            throw new NotImplementedException();
         }
 
         public TEntity Get(Expression<Func<TEntity,bool>> filter)
         {
-            throw new NotImplementedException();
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().SingleOrDefault(filter);
+            }
         }
 
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            using(TContext context = new TContext())
+            {
+                var updatedEntity = context.Update(entity);
+                updatedEntity.State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
     }
 }
