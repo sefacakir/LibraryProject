@@ -8,7 +8,7 @@ namespace Console
     {
         static void Main(string[] args)
         {
-            Author author = new Author() { Name = "Aziz Nesin" };
+            /*Author author = new Author() { Name = "Aziz Nesin" };
             Category category = new Category() { Name = "Roman" };
             Book story = new Book() { Name = "Zübük", CategoryId = 1, AuthorId = 1,NumberOfPages = 100};
 
@@ -25,9 +25,9 @@ namespace Console
             foreach (var book in books)
             {
                 System.Console.WriteLine(book.Name);
-            }
-            
+            }*/
 
+            System.Console.WriteLine("Test");
 
         }
     }
