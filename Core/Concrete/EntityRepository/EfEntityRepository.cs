@@ -56,13 +56,15 @@ namespace Core.Concrete.EntityRepository
             }
         }
 
-        public void Update(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
             using(TContext context = new TContext())
             {
                 var updatedEntity = context.Update(entity);
                 updatedEntity.State = EntityState.Modified;
                 context.SaveChanges();
+
+                return entity;
             }
         }
     }
