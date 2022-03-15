@@ -10,5 +10,7 @@ namespace Business.Messages
         public static string SuccessDeleted = "Silme işlemi başarılı.";
         public static string SuccessUpdated = "Güncelleme işlemi başarılı.";
         public static string Completed = "İşlem başarılı.";
+        public static string UnCompleted = "İşlem başarısız.";
+        public static string NotData = "Görüntülecek veri bulunamadı.";
     }
 }

@@ -21,6 +21,8 @@ namespace Business.Abstract
         public IDataResult<Book> GetByName(string name);
         public IDataResult<List<Book>> GetAll();
         public IDataResult<List<BookDetailDto>> GetBookDetails(Expression<Func<Book,bool>> filter = null);
+        public IDataResult<List<Book>> GetAllByCategoryId(int id);
+        public IDataResult<List<Book>> GetAllByAuthorId(int id);
 
     }
 }

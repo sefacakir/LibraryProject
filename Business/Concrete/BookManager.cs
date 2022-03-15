@@ -67,5 +67,23 @@ namespace Business.Concrete
             var result = _bookDal.Update(entity);
             return new SuccessResult(Message.SuccessUpdated);
         }
+
+        public IDataResult<List<Book>> GetAllByCategoryId(int id)
+        {
+            var result = _bookDal.GetAll(book => book.CategoryId == id);
+            if (result.Count > 0)
+                return new SuccessDataResult<List<Book>>(result, Message.Completed);
+            else
+                return new SuccessDataResult<List<Book>>(result, Message.NotData);
+        }
+
+        public IDataResult<List<Book>> GetAllByAuthorId(int id)
+        {
+            var result = _bookDal.GetAll(book => book.AuthorId == id);
+            if(result.Count>0)
+                return new SuccessDataResult<List<Book>>(result, Message.Completed);
+            else
+                return new SuccessDataResult<List<Book>>(result, Message.NotData);
+        }
     }
 }

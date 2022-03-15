@@ -49,6 +49,16 @@ namespace API.Controllers
                 return BadRequest(result.Message);
         }
 
+        [HttpGet("getallbycategoryid")]
+        public IActionResult GetAllByCategoryId(int id)
+        {
+            var result = _bookService.GetAllByCategoryId(id);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
+        }
+
         [HttpPut]
         public IActionResult Update(Book book)
         {
