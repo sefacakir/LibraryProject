@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using Business.Messages;
 using System.Text;
 
 namespace Business.Concrete
@@ -16,39 +18,46 @@ namespace Business.Concrete
         }
 
 
-        public void Add(Category category)
+        public IResult Add(Category category)
         {
             _categoryDal.Add(category);
+            return new SuccessResult(Message.SuccessAdded);
         }
 
-        public void DeleteById(int id)
+        public IResult DeleteById(int id)
         {
             var deletedEntity = _categoryDal.Get(category => category.Id == id);
             _categoryDal.Delete(deletedEntity);
+            return new SuccessResult(Message.SuccessDeleted);
         }
 
-        public void DeleteByName(string name)
+        public IResult DeleteByName(string name)
         {
             var deletedEntity = _categoryDal.Get(c => c.Name.ToLower() == name.ToLower());
             _categoryDal.Delete(deletedEntity);
+            return new SuccessResult(Message.SuccessDeleted);
         }
 
-        public List<Category> GetAll()
+        public IDataResult<List<Category>> GetAll()
         {
-            return _categoryDal.GetAll();
+            var result = _categoryDal.GetAll();
+            return new SuccessDataResult<List<Category>>(result, Message.Completed);
         }
 
-        public Category GetById(int id)
+        public IDataResult<Category> GetById(int id)
         {
-            return _categoryDal.Get(c => c.Id == id);
+            var result =  _categoryDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Category>(result, Message.Completed);
         }
-        public Category GetByName(string name)
+        public IDataResult<Category> GetByName(string name)
         {
-            return _categoryDal.Get(c => c.Name.ToLower() == name.ToLower());
+            var result = _categoryDal.Get(c => c.Name.ToLower() == name.ToLower());
+            return new SuccessDataResult<Category>(result, Message.Completed);
         }
-        public void Update(Category category)
+        public IDataResult<Category> Update(Category category)
         {
-            _categoryDal.Update(category);
+            var result = _categoryDal.Update(category);
+            return new SuccessDataResult<Category>(result, Message.SuccessUpdated);
         }
     }
 }

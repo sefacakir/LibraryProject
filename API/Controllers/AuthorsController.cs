@@ -20,38 +20,55 @@ namespace API.Controllers
         }
 
         [HttpGet("getall")]
-        public IDataResult<List<Author>> GetAll()
+        public IActionResult GetAll()
         {
             var result = _authorService.GetAll();
-            return new SuccessDataResult<List<Author>>(result.Data, result.Message);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpPost]
-        public IResult Add(Author author)
+        public IActionResult Add(Author author)
         {
             var result = _authorService.Add(author);
-            return new SuccessResult(result.Message);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
+
         }
 
         [HttpDelete("id")]
-        public IResult DeleteById(int id)
+        public IActionResult DeleteById(int id)
         {
             var result = _authorService.DeleteById(id);
-            return new SuccessResult(result.Message);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpDelete("name")]
-        public IResult DeleteByName(string name)
+        public IActionResult DeleteByName(string name)
         {
             var result = _authorService.DeleteByName(name);
-            return new SuccessResult(result.Message);
+
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpPut]
-        public IDataResult<Author> Update(Author author)
+        public IActionResult Update(Author author)
         {
             var result = _authorService.Update(author);
-            return new SuccessDataResult<Author>(result.Data, result.Message);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
     }
 }

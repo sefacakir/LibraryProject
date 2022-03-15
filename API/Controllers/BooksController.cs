@@ -20,45 +20,65 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public Book Add(Book book)
+        public IActionResult Add(Book book)
         {
-            _bookService.Add(book);
-            return book;
+            var result = _bookService.Add(book);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpGet("getall")]
-        public List<Book> GetAll()
+        public IActionResult GetAll()
         {
-            return _bookService.GetAll();
+            var result = _bookService.GetAll();
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpGet("getbookdetails")]
-        public List<BookDetailDto> GetBookDetails()
+        public IActionResult GetBookDetails()
         {
-            return _bookService.GetBookDetails();
+            var result = _bookService.GetBookDetails();
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpPut]
-        public Book Update(Book book)
+        public IActionResult Update(Book book)
         {
-            _bookService.Update(book);
-            return book;
+            var result = _bookService.Update(book);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpDelete("id")]
-        public Book DeleteById(int id)
+        public IActionResult DeleteById(int id)
         {
             var deletedEntity = _bookService.GetById(id);
-            _bookService.DeleteById(id);
-            return deletedEntity;
+            var result = _bookService.DeleteById(id);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpDelete("name")]
-        public Book DeleteById(string name)
+        public IActionResult DeleteById(string name)
         {
             var deletedEntity = _bookService.GetByName(name);
-            _bookService.DeleteByName(name);
-            return deletedEntity;
+            var result = _bookService.DeleteByName(name);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
     }
 }

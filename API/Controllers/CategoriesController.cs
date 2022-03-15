@@ -18,35 +18,53 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public Category Add(Category category)
+        public IActionResult Add(Category category)
         {
-            _categoryService.Add(category);
-            return category;
+            var result = _categoryService.Add(category);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpPut]
-        public Category Update(Category category)
+        public IActionResult Update(Category category)
         {
-            _categoryService.Update(category);
-            return category;
+            var result = _categoryService.Update(category);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpGet("getall")]
-        public List<Category> GetAll()
+        public IActionResult GetAll()
         {
-            return _categoryService.GetAll();
+            var result = _categoryService.GetAll();
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpDelete("id")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _categoryService.DeleteById(id);
+            var result = _categoryService.DeleteById(id);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
 
         [HttpDelete("name")]
-        public void Delete(string name)
+        public IActionResult Delete(string name)
         {
-            _categoryService.DeleteByName(name);
+            var result = _categoryService.DeleteByName(name);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result.Message);
         }
     }
 }

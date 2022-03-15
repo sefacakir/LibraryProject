@@ -1,14 +1,13 @@
 ﻿using Business.Abstract;
-using Core.Abstract;
-using Core.Concrete.EntityRepository;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using Business.Messages;
 
 namespace Business.Concrete
 {
@@ -19,46 +18,54 @@ namespace Business.Concrete
         {
             _bookDal = book;
         }
-        public void Add(Book book)
+        public IResult Add(Book book)
         {
             _bookDal.Add(book);
+            return new SuccessResult(Message.SuccessAdded);
         }
 
-        public void DeleteById(int id)
+        public IResult DeleteById(int id)
         {
             var deletedBook = _bookDal.Get(book => book.Id == id);
             _bookDal.Delete(deletedBook);
+            return new SuccessResult(Message.SuccessDeleted);
         }
 
-        public void DeleteByName(string name)
+        public IResult DeleteByName(string name)
         {
             var deletedBook = _bookDal.Get(book => book.Name.ToLower() == name.ToLower());
             _bookDal.Delete(deletedBook);
+            return new SuccessResult(Message.SuccessDeleted);
         }
 
-        public List<Book> GetAll()
+        public IDataResult<List<Book>> GetAll()
         {
-            return _bookDal.GetAll();
+            var result = _bookDal.GetAll();
+            return new SuccessDataResult<List<Book>>(result, Message.Completed);
         }
 
-        public List<BookDetailDto> GetBookDetails(Expression<Func<Book, bool>> filter = null)
+        public IDataResult<List<BookDetailDto>> GetBookDetails(Expression<Func<Book, bool>> filter = null)
         {
-            return _bookDal.GetBookDetail();
+            var result = _bookDal.GetBookDetail();
+            return new SuccessDataResult<List<BookDetailDto>>(result, Message.Completed);
         }
 
-        public Book GetById(int id)
+        public IDataResult<Book> GetById(int id)
         {
-            return _bookDal.Get(c => c.Id == id);
+            var result = _bookDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Book>(result, Message.Completed);
         }
 
-        public Book GetByName(string name)
+        public IDataResult<Book> GetByName(string name)
         {
-            return _bookDal.Get(c => c.Name.ToLower() == name.ToLower());
+             var result = _bookDal.Get(c => c.Name.ToLower() == name.ToLower());
+            return new SuccessDataResult<Book>(result, Message.Completed);
         }
 
-        public void Update(Book entity)
+        public IResult Update(Book entity)
         {
-            _bookDal.Update(entity);
+            var result = _bookDal.Update(entity);
+            return new SuccessResult(Message.SuccessUpdated);
         }
     }
 }

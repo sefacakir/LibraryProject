@@ -1,5 +1,6 @@
 ﻿using Core.Abstract;
 using Core.Concrete.EntityRepository;
+using Core.Utilities.Results;
 using Entities.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -12,14 +13,14 @@ namespace Business.Abstract
 {
     public interface IBookService
     {
-        public void Add(Book entity);
-        public void DeleteById(int id);
-        public void DeleteByName(string name);
-        public void Update(Book entity);
-        public Book GetById(int id);
-        public Book GetByName(string name);
-        public List<Book> GetAll();
-        public List<BookDetailDto> GetBookDetails(Expression<Func<Book,bool>> filter = null);
+        public IResult Add(Book entity);
+        public IResult DeleteById(int id);
+        public IResult DeleteByName(string name);
+        public IResult Update(Book entity);
+        public IDataResult<Book> GetById(int id);
+        public IDataResult<Book> GetByName(string name);
+        public IDataResult<List<Book>> GetAll();
+        public IDataResult<List<BookDetailDto>> GetBookDetails(Expression<Func<Book,bool>> filter = null);
 
     }
 }

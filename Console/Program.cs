@@ -17,12 +17,6 @@ namespace Console
             AuthorManager authorManager = new AuthorManager(new AuthorDal());
             BookManager bookManager = new BookManager(new BookDal());
 
-            var items = categoryManager.GetAll();
-            foreach (var item in items)
-            {
-                System.Console.WriteLine(items.Count + item.Name);
-            }
-
         }
     }
 }
